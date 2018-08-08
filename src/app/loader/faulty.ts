@@ -2,7 +2,7 @@
 // network or backend service; it adds random delays and random
 // failure probability.one
 
-import { Observable, defer, throwError, timer } from 'rxjs';
+import { defer, Observable, throwError, timer } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 export interface FaultyOptions {

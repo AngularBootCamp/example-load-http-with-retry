@@ -1,4 +1,4 @@
-import { Observable, Subject, defer, merge, of, timer } from 'rxjs';
+import { defer, merge, Observable, of, Subject, timer } from 'rxjs';
 import { delayWhen, filter, map, retryWhen, switchMap, tap } from 'rxjs/operators';
 
 export enum LoadResultStatus {

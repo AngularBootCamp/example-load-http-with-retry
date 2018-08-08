@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { filter, map, tap, share } from 'rxjs/operators';
+import { filter, map, share, tap } from 'rxjs/operators';
 
-import { EmployeeLoader } from './employeeLoader';
 import { Employee } from './employee';
-import { statusStrings, LoadResultStatus, loadWithRetry } from './loader/loadWithRetry';
+import { EmployeeLoader } from './employeeLoader';
 import { faulty } from './loader/faulty';
+import { LoadResultStatus, loadWithRetry, statusStrings } from './loader/loadWithRetry';
 
 @Component({
   selector: 'app-root',
