@@ -1,4 +1,4 @@
-import { defer, merge, Observable, of, Subject, timer } from 'rxjs';
+import { BehaviorSubject, Observable, defer, merge, timer } from 'rxjs';
 import { delayWhen, filter, map, retryWhen, switchMap, tap } from 'rxjs/operators';
 
 export enum LoadResultStatus {
@@ -50,28 +50,28 @@ export function loadWithRetry<S, T>(
   const options = { ...DEFAULT_OPTIONS, ...opts };
 
   return source.pipe(switchMap(key => {
-    const sideChannel = new Subject<LoadResult<T>>();
+    const notifications = new BehaviorSubject<LoadResult<T>>({ status: LoadResultStatus.InProgress });
     let attempt = 0;
     return merge(
-      of({ status: LoadResultStatus.InProgress }),
-      sideChannel,
+      notifications,
       defer(() => {
         attempt++;
         return producer(key);
       }).pipe(
         retryWhen(errors => errors.pipe(
           tap(error =>
-            sideChannel.next({
+            notifications.next({
               status: LoadResultStatus.Error,
               error,
               willRetry: attempt < options.attempts
             })),
           filter(_ => attempt < options.attempts),
-          tap(_ => sideChannel.next({ status: LoadResultStatus.Waiting })),
+          tap(_ => notifications.next({ status: LoadResultStatus.Waiting })),
           delayWhen(() => retryDelay(options, attempt)),
-          tap(_ => sideChannel.next({ status: LoadResultStatus.Retrying })))
+          tap(_ => notifications.next({ status: LoadResultStatus.Retrying })))
         ),
-        map((data: T) => ({ status: LoadResultStatus.Success, data })))
+        map((data: T) => ({ status: LoadResultStatus.Success, data }))
+      )
     );
   }));
 }

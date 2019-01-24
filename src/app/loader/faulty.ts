@@ -1,8 +1,8 @@
 // This observable transformation can be used to simulate a faulty
-// network or backend service; it adds random delays and random
-// failure probability.one
+// network or backend service. It adds random delays and random
+// failure probability.
 
-import { defer, Observable, throwError, timer } from 'rxjs';
+import { Observable, defer, throwError, timer } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 export interface FaultyOptions {
