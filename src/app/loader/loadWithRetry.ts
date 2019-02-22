@@ -35,7 +35,7 @@ interface Options {
 export interface LoadWithRetryOptions extends Partial<Options> {
 }
 
-const DEFAULT_OPTIONS: Options = {
+const defaultOptions: Options = {
   attempts: 3,
   retryDelayMs: 2000,
   retryBackoffCoefficient: 1.5,
@@ -47,7 +47,7 @@ export function loadWithRetry<S, T>(
   producer: (key: S) => Observable<T>,
   opts?: LoadWithRetryOptions
 ): Observable<LoadResult<T>> {
-  const options = { ...DEFAULT_OPTIONS, ...opts };
+  const options = { ...defaultOptions, ...opts };
 
   return source.pipe(switchMap(key => {
     const notifications = new BehaviorSubject<LoadResult<T>>({ status: LoadResultStatus.InProgress });

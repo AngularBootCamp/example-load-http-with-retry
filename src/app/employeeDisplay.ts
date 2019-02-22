@@ -7,5 +7,5 @@ import { Employee } from './employee';
   templateUrl: './employeeDisplay.html'
 })
 export class EmployeeDisplayComponent {
-  @Input() employee: Employee;
+  @Input() employee: Employee | undefined;
 }

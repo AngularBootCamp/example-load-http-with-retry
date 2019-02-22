@@ -10,13 +10,13 @@ export interface FaultyOptions {
   maxDelayMs?: number;
 }
 
-const DEFAULT_OPTIONS = {
+const defaultOptions = {
   errorProbability: 0.3,
   maxDelayMs: 1000
 };
 
 export function faulty<T>(opts?: FaultyOptions): (source: Observable<T>) => Observable<T> {
-  const options = Object.assign({}, DEFAULT_OPTIONS, opts);
+  const options = Object.assign({}, defaultOptions, opts);
   return (source) => defer<T>(() => {
     return timer(Math.random() * options.maxDelayMs)
       .pipe(mergeMap(_value =>

@@ -7,6 +7,6 @@ import { Employee } from './employee';
   templateUrl: './employeeList.html'
 })
 export class EmployeeListComponent {
-  @Input() employees: Employee[];
+  @Input() employees: Employee[] = [];
   @Output() selectedEmployee = new EventEmitter<number>();
 }
