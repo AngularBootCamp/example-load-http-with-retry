@@ -15,13 +15,18 @@ const defaultOptions = {
   maxDelayMs: 1000
 };
 
-export function faulty<T>(opts?: FaultyOptions): (source: Observable<T>) => Observable<T> {
-  const options = Object.assign({}, defaultOptions, opts);
-  return (source) => defer<T>(() => {
-    return timer(Math.random() * options.maxDelayMs)
-      .pipe(mergeMap(_value =>
-        (Math.random() < options.errorProbability) ?
-          throwError(new Error('Failed in faulty')) :
-          source));
-  });
+export function faulty<T>(
+  opts?: FaultyOptions
+): (source: Observable<T>) => Observable<T> {
+  const options = { ...defaultOptions, ...opts };
+  return source =>
+    defer<Observable<T>>(() => {
+      return timer(Math.random() * options.maxDelayMs).pipe(
+        mergeMap(_value =>
+          Math.random() < options.errorProbability
+            ? throwError(new Error('Failed in faulty'))
+            : source
+        )
+      );
+    });
 }

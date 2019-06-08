@@ -1,5 +1,18 @@
-import { BehaviorSubject, Observable, defer, merge, timer } from 'rxjs';
-import { delayWhen, filter, map, retryWhen, switchMap, tap } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  Observable,
+  defer,
+  merge,
+  timer
+} from 'rxjs';
+import {
+  delayWhen,
+  filter,
+  map,
+  retryWhen,
+  switchMap,
+  tap
+} from 'rxjs/operators';
 
 export enum LoadResultStatus {
   InProgress,
@@ -32,8 +45,7 @@ interface Options {
   retryMaxDelayMs: number;
 }
 
-export interface LoadWithRetryOptions extends Partial<Options> {
-}
+export interface LoadWithRetryOptions extends Partial<Options> {}
 
 const defaultOptions: Options = {
   attempts: 3,
@@ -49,36 +61,60 @@ export function loadWithRetry<S, T>(
 ): Observable<LoadResult<T>> {
   const options = { ...defaultOptions, ...opts };
 
-  return source.pipe(switchMap(key => {
-    const notifications = new BehaviorSubject<LoadResult<T>>({ status: LoadResultStatus.InProgress });
-    let attempt = 0;
-    return merge(
-      notifications,
-      defer(() => {
-        attempt++;
-        return producer(key);
-      }).pipe(
-        retryWhen(errors => errors.pipe(
-          tap(error =>
-            notifications.next({
-              status: LoadResultStatus.Error,
-              error,
-              willRetry: attempt < options.attempts
-            })),
-          filter(_ => attempt < options.attempts),
-          tap(_ => notifications.next({ status: LoadResultStatus.Waiting })),
-          delayWhen(() => retryDelay(options, attempt)),
-          tap(_ => notifications.next({ status: LoadResultStatus.Retrying })))
-        ),
-        map((data: T) => ({ status: LoadResultStatus.Success, data }))
-      )
-    );
-  }));
+  return source.pipe(
+    switchMap(key => {
+      const notifications = new BehaviorSubject<LoadResult<T>>({
+        status: LoadResultStatus.InProgress
+      });
+      let attempt = 0;
+      return merge(
+        notifications,
+        defer(() => {
+          attempt++;
+          return producer(key);
+        }).pipe(
+          retryWhen(errors =>
+            errors.pipe(
+              tap(error =>
+                notifications.next({
+                  status: LoadResultStatus.Error,
+                  error,
+                  willRetry: attempt < options.attempts
+                })
+              ),
+              filter(_ => attempt < options.attempts),
+              tap(_ =>
+                notifications.next({
+                  status: LoadResultStatus.Waiting
+                })
+              ),
+              delayWhen(() => retryDelay(options, attempt)),
+              tap(_ =>
+                notifications.next({
+                  status: LoadResultStatus.Retrying
+                })
+              )
+            )
+          ),
+          map((data: T) => ({
+            status: LoadResultStatus.Success,
+            data
+          }))
+        )
+      );
+    })
+  );
 }
 
-function retryDelay(options: Options, attempt: number): Observable<any> {
-  const jitter = (Math.random() - .5) * options.retryDelayMs * .5;
-  let delay = options.retryDelayMs * Math.pow(options.retryBackoffCoefficient, attempt - 1) + jitter;
+function retryDelay(
+  options: Options,
+  attempt: number
+): Observable<any> {
+  const jitter = (Math.random() - 0.5) * options.retryDelayMs * 0.5;
+  let delay =
+    options.retryDelayMs *
+      Math.pow(options.retryBackoffCoefficient, attempt - 1) +
+    jitter;
   delay = Math.min(delay, options.retryMaxDelayMs);
   return timer(delay);
 }

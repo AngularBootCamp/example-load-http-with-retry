@@ -5,7 +5,11 @@ import { filter, map, share, tap } from 'rxjs/operators';
 import { Employee } from './employee';
 import { EmployeeLoader } from './employeeLoader';
 import { faulty } from './loader/faulty';
-import { LoadResultStatus, loadWithRetry, statusStrings } from './loader/loadWithRetry';
+import {
+  LoadResultStatus,
+  loadWithRetry,
+  statusStrings
+} from './loader/loadWithRetry';
 
 @Component({
   selector: 'app-root',
@@ -24,19 +28,23 @@ export class PageComponent {
 
     const loadResults = loadWithRetry(
       this.selectedEmployeeId,
-      id => employeeLoader.getDetails(id)
-        .pipe(faulty<Employee>())   // add this to simulate bad connection
+      id => employeeLoader.getDetails(id).pipe(faulty<Employee>()) // add this to simulate bad connection
     ).pipe(share());
 
     this.status = loadResults.pipe(
-      tap(result => console.log('RECEIVED', result, 'at', new Date())),
-      map(result => statusStrings[result.status]));
+      tap(result =>
+        console.log('RECEIVED', result, 'at', new Date())
+      ),
+      map(result => statusStrings[result.status])
+    );
 
     this.showEmployeeDetails = loadResults.pipe(
-      map(result => result.status === LoadResultStatus.Success));
+      map(result => result.status === LoadResultStatus.Success)
+    );
 
     this.selectedEmployee = loadResults.pipe(
       filter(result => result.status === LoadResultStatus.Success),
-      map(result => result.data));
+      map(result => result.data)
+    );
   }
 }

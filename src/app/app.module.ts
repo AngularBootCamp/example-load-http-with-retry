@@ -14,10 +14,7 @@ import { PageComponent } from './page';
     EmployeeDetailComponent,
     EmployeeDisplayComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule
-  ],
+  imports: [BrowserModule, HttpClientModule],
   bootstrap: [PageComponent]
 })
-export class AppModule { }
+export class AppModule {}
