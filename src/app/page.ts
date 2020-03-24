@@ -44,7 +44,7 @@ export class PageComponent {
 
     this.selectedEmployee = loadResults.pipe(
       filter(result => result.status === LoadResultStatus.Success),
-      map(result => result.data)
+      map(result => result.payload)
     );
   }
 }

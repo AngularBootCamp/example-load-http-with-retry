@@ -32,7 +32,7 @@ export const statusStrings = [
 
 export interface LoadResult<T> {
   status: LoadResultStatus;
-  data?: T;
+  payload?: T;
   error?: any;
   willRetry?: boolean;
 }
@@ -96,9 +96,9 @@ export function loadWithRetry<S, T>(
               )
             )
           ),
-          map((data: T) => ({
+          map((payload: T) => ({
             status: LoadResultStatus.Success,
-            data
+            payload
           }))
         )
       );
