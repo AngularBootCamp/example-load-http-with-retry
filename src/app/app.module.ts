@@ -9,10 +9,10 @@ import { PageComponent } from './page';
 
 @NgModule({
   declarations: [
-    PageComponent,
-    EmployeeListComponent,
     EmployeeDetailComponent,
-    EmployeeDisplayComponent
+    EmployeeDisplayComponent,
+    EmployeeListComponent,
+    PageComponent
   ],
   imports: [BrowserModule, HttpClientModule],
   bootstrap: [PageComponent]

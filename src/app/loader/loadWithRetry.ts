@@ -45,7 +45,7 @@ interface Options {
   retryMaxDelayMs: number;
 }
 
-export interface LoadWithRetryOptions extends Partial<Options> {}
+export type LoadWithRetryOptions = Partial<Options>;
 
 const defaultOptions: Options = {
   attempts: 3,
