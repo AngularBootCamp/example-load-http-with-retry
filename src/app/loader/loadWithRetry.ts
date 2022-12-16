@@ -3,16 +3,14 @@ import {
   Observable,
   defer,
   merge,
-  timer
-} from 'rxjs';
-import {
+  timer,
   delayWhen,
   filter,
   map,
   retryWhen,
   switchMap,
   tap
-} from 'rxjs/operators';
+} from 'rxjs';
 
 export enum LoadResultStatus {
   InProgress,

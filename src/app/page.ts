@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { filter, map, share, tap } from 'rxjs/operators';
+import { Observable, Subject, filter, map, share, tap } from 'rxjs';
 
 import { Employee } from './employee';
 import { EmployeeLoader } from './employeeLoader';
