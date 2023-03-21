@@ -12,10 +12,10 @@ import {
 
 @Component({
   selector: 'app-root',
-  templateUrl: './page.html',
-  styleUrls: ['./page.css']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class PageComponent {
+export class AppComponent {
   selectedEmployee: Observable<Employee | undefined>;
   status: Observable<string>;
   selectedEmployeeId = new Subject<number>();

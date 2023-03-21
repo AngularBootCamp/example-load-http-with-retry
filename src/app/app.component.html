@@ -10,7 +10,9 @@
   </div>
 
   <employee-display
-    [style.visibility]="(showEmployeeDetails | async) ? 'visible' : 'hidden'"
+    [style.visibility]="
+      (showEmployeeDetails | async) ? 'visible' : 'hidden'
+    "
     [employee]="(selectedEmployee | async) ?? undefined"
   ></employee-display>
 </div>
