@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { EmployeeDetailComponent } from './employeeDetail';
-import { EmployeeDisplayComponent } from './employeeDisplay';
-import { EmployeeListComponent } from './employeeList';
+import { EmployeeDetailComponent } from './employee-detail.component';
+import { EmployeeDisplayComponent } from './employee-display.component';
+import { EmployeeListComponent } from './employee-list.component';
 
 @NgModule({
   declarations: [

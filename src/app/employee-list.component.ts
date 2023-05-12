@@ -8,8 +8,8 @@ import {
 import { Employee } from './employee';
 
 @Component({
-  selector: 'employee-list',
-  templateUrl: './employeeList.html'
+  selector: 'app-employee-list',
+  templateUrl: './employee-list.component.html'
 })
 export class EmployeeListComponent {
   @Input() employees: Employee[] = [];

@@ -3,9 +3,9 @@ import { Component, Input } from '@angular/core';
 import { Employee } from './employee';
 
 @Component({
-  selector: 'employee-detail',
-  templateUrl: './employeeDetail.html'
+  selector: 'app-employee-display',
+  templateUrl: './employee-display.component.html'
 })
-export class EmployeeDetailComponent {
+export class EmployeeDisplayComponent {
   @Input() employee: Employee | undefined;
 }
