@@ -31,7 +31,7 @@ export const statusStrings = [
 export interface LoadResult<T> {
   status: LoadResultStatus;
   payload?: T;
-  error?: any;
+  error?: unknown;
   willRetry?: boolean;
 }
 
@@ -107,7 +107,7 @@ export function loadWithRetry<S, T>(
 function retryDelay(
   options: Options,
   attempt: number
-): Observable<any> {
+): Observable<0> {
   const jitter = (Math.random() - 0.5) * options.retryDelayMs * 0.5;
   let delay =
     options.retryDelayMs *
