@@ -1,7 +1,10 @@
+import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Observable, Subject, filter, map, share, tap } from 'rxjs';
 
 import { Employee } from './employee';
+import { EmployeeDisplayComponent } from './employee-display.component';
+import { EmployeeListComponent } from './employee-list.component';
 import { EmployeeLoader } from './employeeLoader';
 import { faulty } from './loader/faulty';
 import {
@@ -13,7 +16,13 @@ import {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [
+    EmployeeListComponent,
+    EmployeeDisplayComponent,
+    AsyncPipe
+  ]
 })
 export class AppComponent {
   selectedEmployee: Observable<Employee | undefined>;
