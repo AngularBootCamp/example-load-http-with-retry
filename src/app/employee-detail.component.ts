@@ -10,5 +10,5 @@ import { EmployeeDisplayComponent } from './employee-display.component';
   imports: [EmployeeDisplayComponent]
 })
 export class EmployeeDetailComponent {
-  @Input() employee: Employee | undefined;
+  @Input({ required: true }) employee: Employee | undefined;
 }

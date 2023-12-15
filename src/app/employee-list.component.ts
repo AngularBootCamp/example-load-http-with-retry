@@ -15,6 +15,6 @@ import { Employee } from './employee';
   imports: [NgFor]
 })
 export class EmployeeListComponent {
-  @Input() employees: Employee[] = [];
+  @Input({ required: true }) employees!: Employee[];
   @Output() selectedEmployee = new EventEmitter<number>();
 }
