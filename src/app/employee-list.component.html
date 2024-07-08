@@ -1,8 +1,10 @@
 <article>
   <header>Select Employee</header>
-  <p *ngFor="let employee of employees">
-    <a (click)="selectedEmployee.emit(employee.id)">
-      {{ employee.firstName }} {{ employee.lastName }}
-    </a>
-  </p>
+  @for (employee of employees; track employee) {
+    <p>
+      <a (click)="selectedEmployee.emit(employee.id)">
+        {{ employee.firstName }} {{ employee.lastName }}
+      </a>
+    </p>
+  }
 </article>
